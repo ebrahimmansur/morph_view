@@ -34,7 +34,9 @@ jobs:
           flutter-version: "3.24.5"
           cache: true
       # flutter_lints 6 needs Dart 3.8; lints are a dev-only dependency.
-      - run: sed -i "s/flutter_lints: ^6.0.0/flutter_lints: ^5.0.0/" pubspec.yaml
+      - name: Use flutter_lints 5 for Dart 3.5
+        run: |
+          sed -i 's/flutter_lints: ^6.0.0/flutter_lints: ^5.0.0/' pubspec.yaml
       - run: flutter pub get
       - run: flutter analyze lib test
       - run: flutter test
