@@ -12,3 +12,6 @@ export 'src/models/display_region.dart';
 export 'src/models/morph_feature.dart';
 export 'src/models/window_size_class.dart';
 export 'src/platform/display_environment_source.dart';
+export 'src/widgets/morph_layout_builder.dart';
+export 'src/widgets/morph_two_pane.dart';
+export 'src/widgets/morph_view.dart';
