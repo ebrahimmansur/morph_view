@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    name: Format, analyze, test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart format --output=none --set-exit-if-changed .
+      - run: flutter analyze
+      - run: flutter test
+      - run: flutter test
+        working-directory: example
+      - run: flutter test --platform chrome
+      - run: dart pub publish --dry-run
+
+  minimum-sdk:
+    name: Minimum SDK (Flutter 3.24)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.5"
+          cache: true
+      # flutter_lints 6 needs Dart 3.8; lints are a dev-only dependency.
+      - run: sed -i "s/flutter_lints: ^6.0.0/flutter_lints: ^5.0.0/" pubspec.yaml
+      - run: flutter pub get
+      - run: flutter analyze lib test
+      - run: flutter test
