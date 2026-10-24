@@ -163,9 +163,10 @@ void main() {
     test('current follows defaultTargetPlatform', () {
       debugDefaultTargetPlatformOverride = TargetPlatform.android;
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
+      // Flutter web never reports display features, even on Android.
       expect(
         DisplayCapabilities.current().foldGeometry,
-        CapabilityStatus.supported,
+        kIsWeb ? CapabilityStatus.unsupported : CapabilityStatus.supported,
       );
     });
 
