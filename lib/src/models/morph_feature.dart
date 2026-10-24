@@ -32,20 +32,30 @@ class MorphFeature {
   ///
   /// The feature's bounds must already be in logical pixels, as they are in
   /// `MediaQueryData.displayFeatures`.
+  ///
+  /// Engine values MorphView does not know about map to
+  /// [DisplayFeatureKind.unknown] and [DisplayPosture.unknown]. `dart:ui`
+  /// enums differ between platforms (the web engine has extra postures) and
+  /// can grow between Flutter versions, so lookups are used here instead of
+  /// exhaustive switches.
   factory MorphFeature.fromDisplayFeature(ui.DisplayFeature feature) {
-    final kind = switch (feature.type) {
-      ui.DisplayFeatureType.hinge => DisplayFeatureKind.hinge,
-      ui.DisplayFeatureType.fold => DisplayFeatureKind.fold,
-      ui.DisplayFeatureType.cutout => DisplayFeatureKind.cutout,
-      ui.DisplayFeatureType.unknown => DisplayFeatureKind.unknown,
-    };
-    final state = switch (feature.state) {
-      ui.DisplayFeatureState.postureFlat => DisplayPosture.flat,
-      ui.DisplayFeatureState.postureHalfOpened => DisplayPosture.halfOpened,
-      ui.DisplayFeatureState.unknown => DisplayPosture.unknown,
-    };
-    return MorphFeature(bounds: feature.bounds, kind: kind, state: state);
+    return MorphFeature(
+      bounds: feature.bounds,
+      kind: _kinds[feature.type] ?? DisplayFeatureKind.unknown,
+      state: _postures[feature.state] ?? DisplayPosture.unknown,
+    );
   }
+
+  static const _kinds = {
+    ui.DisplayFeatureType.hinge: DisplayFeatureKind.hinge,
+    ui.DisplayFeatureType.fold: DisplayFeatureKind.fold,
+    ui.DisplayFeatureType.cutout: DisplayFeatureKind.cutout,
+  };
+
+  static const _postures = {
+    ui.DisplayFeatureState.postureFlat: DisplayPosture.flat,
+    ui.DisplayFeatureState.postureHalfOpened: DisplayPosture.halfOpened,
+  };
 
   /// The area the feature covers, in logical pixels in window coordinates.
   ///
