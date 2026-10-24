@@ -1,0 +1,7 @@
+build/
+.dart_tool/
+.github/
+.idea/
+*.iml
+morph_view_guide.md
+example/build/

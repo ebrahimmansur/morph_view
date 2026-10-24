@@ -1,0 +1,29 @@
+name: morph_view
+description: >-
+  One UI. Every screen. A cross-platform Flutter toolkit for display awareness
+  and adaptive layouts - window size classes, folds, hinges and usable regions.
+version: 0.1.0
+homepage: https://github.com/ebrahimmansur/morph_view
+repository: https://github.com/ebrahimmansur/morph_view
+issue_tracker: https://github.com/ebrahimmansur/morph_view/issues
+topics:
+  - foldable
+  - responsive
+  - adaptive
+  - layout
+  - display
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
